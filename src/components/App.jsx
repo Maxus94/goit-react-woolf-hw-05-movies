@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import Movies from './Movies/Movies';
 import { getPopularMovies } from 'api/movies';
+import MovieDetails from './MovieDetails/MovieDetails';
 
 // const API_KEY = '42d69b74658d094e483cef78afa9428a';
 
@@ -20,13 +21,12 @@ export const App = () => {
     };
     formMoviesList();
   }, []);
-  console.log(movies);
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home movies={movies} />} />
         <Route path="movies" element={<Movies />} />
-        {/* <Route path="/movies/:movieId" element={<MovieDetails />} /> */}
+        <Route path="/movies/:movieId" element={<MovieDetails />} />
         <Route path="movies/:poster_path" element={<div>lkjlkjk</div>} />
       </Route>
     </Routes>
