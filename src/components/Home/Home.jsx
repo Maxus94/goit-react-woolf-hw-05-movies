@@ -5,6 +5,8 @@
 // /movies/get-movie-reviews запит оглядів для сторінки кінофільму.
 // Посилання на документацію
 
+import { Link } from 'react-router-dom';
+
 // У застосунку повинні бути такі маршрути. Якщо користувач зайшов за неіснуючим маршрутом, його необхідно перенаправляти на домашню сторінку.
 
 // '/' – компонент Home, домашня сторінка зі списком популярних кінофільмів.
@@ -33,11 +35,15 @@ const Home = ({ movies }) => {
       <ul>
         {movies.map(movie => (
           <li key={movie.id}>
-            <a
+            <Link to={`/movies/${movie.id}`}>
+              {movie.title ? movie.title : movie.name}
+            </Link>
+
+            {/* <a
               href={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
             >
               {movie.title ? movie.title : movie.name}
-            </a>
+            </a> */}
           </li>
         ))}
       </ul>

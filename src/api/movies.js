@@ -26,7 +26,7 @@ export const getMoviesByQuery = async (query, page = 1) => {
 export const getMoviesByID = async movieID => {
   console.log(movieID);
   const { data } = await axios(
-    `https://api.themoviedb.org/3/movie/movie_id?language=en-US&movie_id=${movieID}`
+    `https://api.themoviedb.org/3/movie/${movieID}?language=en-US`
   );
   return data;
 };
