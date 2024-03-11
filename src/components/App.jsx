@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react';
-import MainLayout from 'layouts/MainLayout';
+// Додай асинхронне завантаження JS-коду для маршрутів застосунку, використовуючи React.lazy() і Suspense.
+
+import { useEffect, useState, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../pages/Home/Home';
-import Movies from '../pages/Movies/Movies';
+
 import { getPopularMovies } from 'api/movies';
-import MovieDetails from '../pages/MovieDetails/MovieDetails';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
+
+import MainLayout from 'layouts/MainLayout';
+
+const Home = lazy(() => import('../pages/Home/Home'));
+const Movies = lazy(() => import('../pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
+const Cast = lazy(() => import('./Cast/Cast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
+// import Home from '../pages/Home/Home';
+// import Movies from '../pages/Movies/Movies';
+// import MovieDetails from '../pages/MovieDetails/MovieDetails';
+// import Cast from './Cast/Cast';
+// import Reviews from './Reviews/Reviews';
 
 // const API_KEY = '42d69b74658d094e483cef78afa9428a';
 

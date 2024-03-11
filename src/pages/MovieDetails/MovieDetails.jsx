@@ -1,11 +1,10 @@
 import { getMoviesByID } from 'api/movies';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 
 const MovieDetails = () => {
   const location = useLocation();
-  // const ref = useRef(location.state?.from ?? '/');
-  const ref = useRef(location);
+  const ref = useRef(location.state?.from ?? '/');
   const [movieInfo, setMovieInfo] = useState({});
   const { movieId } = useParams();
   const defaultImg =
@@ -13,6 +12,7 @@ const MovieDetails = () => {
   const searchMovies = async id => {
     try {
       const data = await getMoviesByID(id);
+      data.release_date = data.release_date.slice(0, 4);
       setMovieInfo(data);
       // setMovies(data.results);
     } catch (error) {}
@@ -20,10 +20,12 @@ const MovieDetails = () => {
   useEffect(() => {
     searchMovies(movieId);
   }, [movieId]);
-  console.log(ref.current);
+  // console.log(movieInfo.release_date);
+  // const releaseYear = movieInfo.release_date;
+  // console.log(releaseYear, typeof releaseYear);
   return (
     <div>
-      <Link to={ref.state?.from ?? '/'}>Go back</Link>
+      <Link to={ref.current}>Go back</Link>
       {/* <Link to={location.state?.from ?? '/'}>Go back</Link> */}
       {/* {location.state && <Link to={'/'}>Go back</Link>} */}
       {movieInfo.original_title} ({movieInfo.release_date}){movieInfo.overview}
@@ -45,7 +47,10 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Outlet />
+      </Suspense>
+      {/* <Outlet /> */}
     </div>
   );
 };
