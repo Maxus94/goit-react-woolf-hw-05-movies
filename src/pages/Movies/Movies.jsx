@@ -1,34 +1,45 @@
 import { getMoviesByQuery } from 'api/movies';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 
 const Movies = () => {
   const [searchText, setSearchText] = useState('');
   const [movies, setMovies] = useState([]);
-  const handleChange = evt => {
-    evt.preventDefault();
-    setSearchText(evt.target.value);
-  };
-  const searchMovies = async () => {
-    try {
-      const data = await getMoviesByQuery(searchText);
-      console.log(data.results);
-      setMovies(data.results);
-    } catch (error) {
-      console.log(error);
-    }
-    setSearchText('');
-  };
-  // console.log(movies);
+  const [searchParams, setSearchParams] = useSearchParams('');
+  const location = useLocation();
 
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const form = evt.currentTarget;
+    setSearchParams({ search: form.elements.text.value });
+    form.reset();
+  };
+
+  useEffect(() => {
+    const searchMovies = async () => {
+      try {
+        const data = await getMoviesByQuery(searchText);
+        setMovies(data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const query = searchParams.get('search');
+    query && setSearchText(query);
+    searchMovies();
+  }, [searchParams, searchText]);
   return (
     <div>
-      <input onChange={handleChange} type="text" value={searchText} />
-      <button onClick={searchMovies}>Search</button>
+      <form action="" onSubmit={handleSubmit}>
+        <input type="text" name="text" />
+        <button type="submit">Search</button>
+      </form>
       <ul>
         {movies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.original_title}</Link>
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+              {movie.original_title}
+            </Link>
           </li>
         ))}
       </ul>

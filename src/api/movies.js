@@ -40,7 +40,7 @@ export const getMovieCastByID = async movieID => {
 
 export const getMovieReviewsByID = async (movieID, page = 1) => {
   const { data } = await axios(
-    `https://api.themoviedb.org/3/movie/movie_id/reviews?language=en-US&page=${page}1&movie_id=${movieID}`
+    `https://api.themoviedb.org/3/movie/${movieID}/reviews?language=en-US&page=${page}`
   );
   return data;
 };

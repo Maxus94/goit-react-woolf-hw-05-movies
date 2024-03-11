@@ -1,8 +1,11 @@
 import { getMoviesByID } from 'api/movies';
-import { useEffect, useState } from 'react';
-import { Link, useParams, Outlet } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 
 const MovieDetails = () => {
+  const location = useLocation();
+  // const ref = useRef(location.state?.from ?? '/');
+  const ref = useRef(location);
   const [movieInfo, setMovieInfo] = useState({});
   const { movieId } = useParams();
   const defaultImg =
@@ -17,9 +20,12 @@ const MovieDetails = () => {
   useEffect(() => {
     searchMovies(movieId);
   }, [movieId]);
-
+  console.log(ref.current);
   return (
     <div>
+      <Link to={ref.state?.from ?? '/'}>Go back</Link>
+      {/* <Link to={location.state?.from ?? '/'}>Go back</Link> */}
+      {/* {location.state && <Link to={'/'}>Go back</Link>} */}
       {movieInfo.original_title} ({movieInfo.release_date}){movieInfo.overview}
       <img
         src={

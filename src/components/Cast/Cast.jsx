@@ -6,7 +6,8 @@ const Cast = () => {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
 
-  const defaultImg = 'src/img/cat.jpg';
+  const defaultImg =
+    'https://glavcom.ua/img/article/9139/95_main-v1678685008.jpg';
   useEffect(() => {
     getMovieCastByID(movieId)
       .then(data => setCast(data.cast))
