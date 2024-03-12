@@ -8,7 +8,6 @@ import css from './Movies.module.css';
 import MoviesList from 'components/MoviesList/MoviesList';
 
 const Movies = () => {
-  const [searchText, setSearchText] = useState('');
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,21 +18,22 @@ const Movies = () => {
   };
 
   useEffect(() => {
+    const query = searchParams.get('search');
     const searchMovies = async () => {
-      setLoading(true);
-      try {
-        const data = await getMoviesByQuery(searchText);
-        setMovies(data.results);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      if (query) {
+        setLoading(true);
+        try {
+          const data = await getMoviesByQuery(query);
+          setMovies(data.results);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
       }
     };
-    const query = searchParams.get('search');
-    query && setSearchText(query);
     searchMovies();
-  }, [searchParams, searchText]);
+  }, [searchParams]);
   return (
     <div className={css.moviesContainer}>
       <SearchForm onSearch={onSearch} />

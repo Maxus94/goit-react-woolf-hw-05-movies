@@ -17,9 +17,7 @@ const MovieDetails = () => {
     setLoading(true);
     try {
       const data = await getMoviesByID(id);
-      // data.release_date = data.release_date.slice(0, 4);
       setMovieInfo(data);
-      // setMovies(data.results);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -78,7 +76,6 @@ const MovieDetails = () => {
           <Suspense fallback={<div>Loading page...</div>}>
             <Outlet />
           </Suspense>
-          {/* <Outlet /> */}
         </div>
       )}
     </div>

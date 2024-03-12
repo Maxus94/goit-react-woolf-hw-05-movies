@@ -9,8 +9,6 @@ const MainLayout = () => {
       <Suspense fallback={<div>Loading page...</div>}>
         <Outlet />
       </Suspense>
-
-      {/* <Outlet /> */}
     </div>
   );
 };
