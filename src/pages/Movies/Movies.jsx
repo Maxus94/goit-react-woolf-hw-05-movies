@@ -1,27 +1,33 @@
 import { getMoviesByQuery } from 'api/movies';
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+
+import SearchForm from 'components/SearchForm/SearchForm';
+
+import css from './Movies.module.css';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const Movies = () => {
   const [searchText, setSearchText] = useState('');
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams('');
-  const location = useLocation();
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const form = evt.currentTarget;
-    setSearchParams({ search: form.elements.text.value });
-    form.reset();
+  const onSearch = query => {
+    setSearchParams({ search: query });
   };
 
   useEffect(() => {
     const searchMovies = async () => {
+      setLoading(true);
       try {
         const data = await getMoviesByQuery(searchText);
         setMovies(data.results);
       } catch (error) {
-        console.log(error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     const query = searchParams.get('search');
@@ -29,20 +35,11 @@ const Movies = () => {
     searchMovies();
   }, [searchParams, searchText]);
   return (
-    <div>
-      <form action="" onSubmit={handleSubmit}>
-        <input type="text" name="text" />
-        <button type="submit">Search</button>
-      </form>
-      <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
-              {movie.original_title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className={css.moviesContainer}>
+      <SearchForm onSearch={onSearch} />
+      {error && <p>Error! {error}</p>}
+      {loading && <p>Loading...</p>}
+      <MoviesList movies={movies} />
     </div>
   );
 };

@@ -1,0 +1,47 @@
+.backButton {
+    display: block;
+    text-align: center;
+    width: 80px;
+    text-decoration: none;
+    color: black;
+    background-color: #EEE;
+    border-color: black;
+    border-style: groove;
+    border-width: 1px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.backButton:hover {
+    background-color: #CCC;
+}
+
+.moviesContainer {
+    padding: 24px;
+}
+
+.movieInfoContainer {
+    display: flex;
+}
+
+.movieTitle {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.movieProperties {
+    margin-left: 24px;
+}
+
+.error {
+    color: red;
+}
+
+.overview {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.genre {
+    margin-right: 8px;
+}

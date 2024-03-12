@@ -24,7 +24,6 @@ export const getMoviesByQuery = async (query, page = 1) => {
 };
 
 export const getMoviesByID = async movieID => {
-  console.log(movieID);
   const { data } = await axios(
     `https://api.themoviedb.org/3/movie/${movieID}?language=en-US`
   );
@@ -44,13 +43,3 @@ export const getMovieReviewsByID = async (movieID, page = 1) => {
   );
   return data;
 };
-
-// export const getSingleProductApi = async (id) => {
-// 	const { data } = await axios(`products/${id}`)
-// 	return data
-// }
-
-// export const deleteProductApi = async (id) => {
-// 	// const { data } = await axios(`products/${id}`)
-// 	const { data } = await axios.delete('products', { params: { id } })
-// 	return data

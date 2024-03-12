@@ -1,13 +1,19 @@
 import { NavLink } from 'react-router-dom';
 
+import css from './Header.module.css';
+
 const Header = () => {
   return (
-    <ul>
+    <ul className={css.headerMenu}>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink className={css.headerLink} to="/">
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/movies">Movies</NavLink>
+        <NavLink className={css.headerLink} to="/movies">
+          Movies
+        </NavLink>
       </li>
     </ul>
   );
