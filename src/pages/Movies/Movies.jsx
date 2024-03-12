@@ -19,17 +19,16 @@ const Movies = () => {
 
   useEffect(() => {
     const query = searchParams.get('search');
+    if (!query) return;
     const searchMovies = async () => {
-      if (query) {
-        setLoading(true);
-        try {
-          const data = await getMoviesByQuery(query);
-          setMovies(data.results);
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
-        }
+      setLoading(true);
+      try {
+        const data = await getMoviesByQuery(query);
+        setMovies(data.results);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     searchMovies();

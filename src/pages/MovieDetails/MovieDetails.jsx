@@ -1,5 +1,5 @@
 import { getMoviesByID } from 'api/movies';
-import { useEffect, useState, useRef, Suspense } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 
 import css from './MovieDetails.module.css';
@@ -73,9 +73,7 @@ const MovieDetails = () => {
               <Link to="reviews">Reviews</Link>
             </li>
           </ul>
-          <Suspense fallback={<div>Loading page...</div>}>
-            <Outlet />
-          </Suspense>
+          <Outlet />
         </div>
       )}
     </div>
